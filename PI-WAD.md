@@ -28,13 +28,55 @@ A solução adota arquitetura full-stack, integrando banco de dados, backend e f
 
 ## <a name="c2"></a>2. Visão Geral da Aplicação Web
 
-### 2.1. Personas (Semana 01)
+### 2.1. Personas
 
 ![Imagem Persona](assets/images/template-persona.png)
 
-### 2.2. User Stories (Semana 01)
+### 2.2. User Stories
 
-*Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a referência USXX para numeração (US01, US02, US03, ...). Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST de 1 User Storie prioritária.*
+| ID | User Story |
+| --- | --- |
+| US01 | Como estudante universitário, quero **cadastrar uma tarefa** com título, descrição, disciplina e prazo, para que eu possa organizar minhas atividades acadêmicas. |
+| US02 | Como estudante universitário, quero **visualizar minhas tarefas em uma visão semanal**, para que eu saiba exatamente o que preciso entregar em cada dia da semana. |
+| US03 | Como estudante universitário, quero **receber lembretes antes do vencimento** das tarefas, para que eu não perca prazos importantes. |
+
+---
+
+### INVEST da US02
+
+> US02 | Como estudante universitário, quero visualizar minhas tarefas em uma visão semanal, para que eu saiba exatamente o que preciso entregar em cada dia da semana.
+> 
+- **I – Independente**
+    
+    A implementação da visão semanal pode ser feita isoladamente, consumindo a lista de tarefas já cadastradas, sem depender de criação ou edição de tarefas.
+    
+- **N – Negociável**
+    
+    O layout (cores, estilo de calendário, número de tarefas exibidas por dia) pode ser ajustado conforme feedback, sem afetar o comportamento central.
+    
+- **V – Valiosa**
+    
+    Oferece ao usuário um panorama claro da semana, reduzindo ansiedade e ajudando na priorização das atividades.
+    
+- **E – Estimável**
+    
+    É possível estimar horas para:
+    
+    1. Consumir a API de tarefas;
+    2. Renderizar o componente de calendário;
+    3. Testar responsividade e interações.
+- **S – Pequena (Small)**
+    
+    A primeira versão pode exibir apenas blocos com título e prazo, sem detalhes avançados (como arrastar tarefas), mantendo o escopo contido.
+    
+- **T – Testável**
+    
+    Testes automatizados ou manuais podem verificar se:
+    
+    - Todas as tarefas aparecem no dia correto;
+    - A semana inicial e final estão corretas;
+    - A visualização reage bem a diferentes tamanhos de tela.
+
 
 ---
 
