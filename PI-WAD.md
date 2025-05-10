@@ -104,7 +104,56 @@ A solução adota arquitetura full-stack, integrando banco de dados, backend e f
 
 ### 3.3. Wireframes (Semana 03)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização).*
+A seguir, apresento os wireframes das telas principais do Gerenciador de Tarefas, alinhados às User Stories:
+
+---
+
+#### 3.3.1 Tela Principal (Visão Semanal)
+
+- **Objetivo (US02):** permitir ao usuário visualizar todas as tarefas da semana de forma clara.
+- **Componentes principais:**
+    - **Cabeçalho**
+        - Logo / nome da aplicação (esquerda)
+        - Botão “+ Nova tarefa” (direita)
+    - **Navegação de datas**
+        - Setas “<” e “>” para navegar entre semanas
+        - Indicador da semana atual (ex: “Semana de 05/05 a 11/05”)
+    - **Grade Semanal**
+        - 7 colunas (segunda a domingo)
+        - Cada coluna exibe cartões de tarefas com:
+            - **Título**
+            - **Prazo** (hora)
+            - **Prioridade** (ícone ou cor de borda)
+    - **Legenda / Filtros (opcional)**
+        - Checkboxes para filtrar por disciplina ou prioridade
+
+![Wireframe Tela Semanal](assets/images/wireframe-tasks.png)
+
+
+---
+
+#### 3.3.2 Tela de Criação/Edição de Tarefa
+
+- **Objetivo (US01, US03):** cadastrar nova tarefa com todos os detalhes necessários.
+- **Componentes principais:**
+    - **Formulário**
+        - Campo “Título” (input text)
+        - Campo “Descrição” (textarea)
+        - Dropdown “Tipo de atividade”
+        - Campo “Data limite” (date picker)
+        - Radio buttons ou dropdown “Prioridade”
+
+![Wireframe Tela Semanal](assets/images/wireframe-new-task.png)
+
+
+---
+
+> Relação com as User Stories
+> 
+> - **US02:** Tela Principal exibe a visão semanal.
+> - **US01 & US03:** Tela de Criação/Edição cobre cadastro de tarefas e geração de lembrete.
+
+Os wireframes de baixa fidelidade focam na estrutura e navegação, garantindo que os fluxos principais (listar, criar e editar tarefas) estejam contemplados antes de avançar para o design de alta fidelidade.
 
 ### 3.4. Guia de estilos (Semana 05)
 
