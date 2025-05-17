@@ -1,15 +1,21 @@
+// server.js
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const routes = require('./routes');
+
+require('dotenv').config();
+
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
-// Middleware para processar JSON
-app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
+app.get('/', (req, res) => {
+  res.send('API Gerenciador de Tarefas funcionando');
+});
+app.use('/api', routes);
 
-// Rotas
-const routes = require('./routes/index');
-app.use('/', routes);
-
-// Inicializa o servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+app.listen(port, () => {
+  console.log(`Servidor rodando em http://localhost:${port}`);
 });

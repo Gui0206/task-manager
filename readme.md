@@ -54,50 +54,83 @@ meu-projeto/
 ## Como executar o projeto localmente
 
 1. **Clonar o repositório**
-    
+
     ```bash
     git clone https://github.com/seu-usuario/seu-repo.git
     cd seu-repo
     ```
-    
+
 2. **Instalar dependências**
-    
+
     ```bash
     npm install
     ```
-    
-3. **Criar arquivo de ambiente**
-    
+
+3. **Configurar variáveis de ambiente**
+
+    Copie o arquivo de exemplo e ajuste as credenciais:
+
     ```bash
     cp .env.example .env
-    # Edite .env para configurar sua conexão com o banco de dados
     ```
-    
+
+    Edite o `.env` com seus dados de conexão PostgreSQL:
+
+    ```env
+    DB_HOST=seu_host_postgres
+    DB_PORT=5432
+    DB_USER=seu_usuario
+    DB_PASSWORD=sua_senha
+    DB_NAME=seu_banco
+    ```
+
 4. **Criar esquema do banco de dados**
-    - Se usar ORM:
-        
-        ```bash
-        npm run migrate
-        ```
-        
-    - Ou importar o script SQL manualmente:
-        
-        ```bash
-        psql -U usuario -d nome_db -f schema.sql
-        ```
-        
+
+    Execute o script de migração:
+
+    ```bash
+    npm run init-db
+    ```
+
+    > O script `scripts/runSQLScript.js` lê e executa `scripts/init.sql`, criando as tabelas no seu banco PostgreSQL.
+
 5. **Iniciar o servidor**
-    
+
     ```bash
     npm start
     # ou
     node server.js
     ```
-    
+
 6. **Acessar a aplicação**
-    
-    Abra no navegador: `http://localhost:3000`
-    
+
+    Abra no navegador:
+
+    ```
+    http://localhost:3000/
+    ```
+
+---
+
+## Conectando ao banco de dados
+
+A configuração da conexão está em `config/database.js`:
+
+```js
+require('dotenv').config();
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  user:     process.env.DB_USER,
+  host:     process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port:     process.env.DB_PORT,
+  ssl:      { rejectUnauthorized: false }
+});
+
+module.exports = pool;
+```
 
 ---
 

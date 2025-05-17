@@ -88,19 +88,49 @@ A solução adota arquitetura full-stack, integrando banco de dados, backend e f
 
 *Posicione também o modelo físico com o Schema do BD (arquivo .sql)*
 
-### 3.1.1 BD e Models (Semana 5)
-*Descreva aqui os Models implementados no sistema web*
+### 3.1.1 BD e Models
 
-### 3.2. Arquitetura (Semana 5)
+O banco de dados PostgreSQL foi inicializado via script SQL (`init.sql`), criando as seguintes tabelas:
 
-*Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário.*
+- **disciplinas**  
+  - `id` (PK)  
+  - `nome`  
+- **tipos_atividade**  
+  - `id` (PK)  
+  - `nome`  
+- **atividades**  
+  - `id` (PK)  
+  - `titulo`  
+  - `descricao`  
+  - `data_criacao` (TIMESTAMP)  
+  - `data_limite` (DATE)  
+  - `status`  
+  - `prioridade`  
+  - `disciplina_id` (FK → `disciplinas.id`)  
+  - `tipo_id` (FK → `tipos_atividade.id`)  
 
-**Instruções para criação do diagrama de arquitetura**  
-- **Model**: A camada que lida com a lógica de negócios e interage com o banco de dados.
-- **View**: A camada responsável pela interface de usuário.
-- **Controller**: A camada que recebe as requisições, processa as ações e atualiza o modelo e a visualização.
-  
-*Adicione as setas e explicações sobre como os dados fluem entre o Model, Controller e View.*
+Os **Models** foram implementados em `models/Tarefa.js`, expondo métodos assíncronos para `create`, `findAll`, `findById`, `update` e `remove`, todos executando SQL puro via `pg`.
+
+
+### 3.2 Arquitetura
+
+A aplicação segue o padrão **MVC**:
+
+- **Model:**  
+  Tabelas e lógica de acesso ao banco (em `models/Tarefa.js`), usando o pacote `pg`.  
+- **Controller:**  
+  `controllers/TarefaController.js` recebe as requisições, chama os métodos de Model e devolve JSON.  
+- **View:**  
+  Nesta parte do módulo, atuamos apenas como API; o frontend consome JSON via HTTP.  
+
+![Diagrama MVC](assets/images/diagrama_mvc.png)
+> Fluxo:  
+> 1. Cliente faz requisição HTTP →  
+> 2. **Controller** processa →  
+> 3. chama **Model** (SQL via `pg`) →  
+> 4. retorna dados →  
+> 5. Controller envia JSON →  
+> 6. Cliente consome resposta.
 
 ### 3.3. Wireframes (Semana 03)
 
@@ -164,9 +194,15 @@ Os wireframes de baixa fidelidade focam na estrutura e navegação, garantindo q
 
 *Posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização).*
 
-### 3.6. WebAPI e endpoints (Semana 05)
+### 3.6 WebAPI e Endpoints
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+| Método | Rota                 | Controller                    | Descrição                         |
+| ------ | -------------------- | ----------------------------- | --------------------------------- |
+| POST   | `/api/tarefas`       | `TarefaController.criarTarefa`  | Cria uma nova tarefa              |
+| GET    | `/api/tarefas`       | `TarefaController.listarTarefas`| Lista todas as tarefas            |
+| GET    | `/api/tarefas/:id`   | `TarefaController.buscarTarefa` | Busca uma tarefa por ID           |
+| PUT    | `/api/tarefas/:id`   | `TarefaController.editarTarefa` | Atualiza os dados de uma tarefa   |
+| DELETE | `/api/tarefas/:id`   | `TarefaController.excluirTarefa`| Remove uma tarefa pelo ID         |
 
 ### 3.7 Interface e Navegação (Semana 07)
 
