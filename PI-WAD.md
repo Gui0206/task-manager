@@ -192,7 +192,10 @@ Os wireframes de baixa fidelidade focam na estrutura e navegação, garantindo q
 
 ### 3.5. Protótipo de alta fidelidade (Semana 05)
 
-*Posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização).*
+![Protótipo de alta fidelidade das telas](assets/images/prototipo-alta-paginas.png)
+<br>
+![Guia de estilos e layout das telas](assets/images/prototipo-alta-layouts.png)
+<br>
 
 ### 3.6 WebAPI e Endpoints
 
