@@ -272,6 +272,9 @@ Nesta fase, o frontend foi implementado para permitir que o usuário interaja di
   3. **Criar/Edição** → abre modal, preenche (se editar), envia com fetch → backend atualiza banco → frontend recarrega grade.  
   4. **Navegação Semanal** → muda `startOfWeek` e chama novamente `loadTasksForWeek()`.
 
+  ![Imagem Home](assets/images/imagem-home.png)
+  ![Imagem Nova Tarefa](assets/images/imagem-nova-tarefa.png)
+
 ---
 
 ## <a name="c4"></a>4. Desenvolvimento da Aplicação Web (Semana 8)
