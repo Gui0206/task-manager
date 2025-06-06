@@ -187,15 +187,54 @@ Os wireframes de baixa fidelidade focam na estrutura e navegação, garantindo q
 
 ### 3.4. Guia de estilos (Semana 05)
 
-*Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
+Este guia de estilos foi criado para garantir uma identidade visual coerente e uma boa experiência de uso em toda a aplicação. A seguir estão as instruções para a utilização correta dos componentes visuais:
+
+---![Guia de estilos e layout das telas](assets/images/prototipo-alta-layouts.png)
+<br>
+
+
+### Tipografia
+
+- A fonte padrão é **Inter**, utilizada em toda a aplicação.
+- Hierarquia:
+  - `H1`: para títulos principais (branco, grande destaque)
+  - `H2`, `H3`, `H4`: para subtítulos e textos auxiliares, com opacidade e tamanhos reduzidos conforme o nível
+  - O texto H4 deve ter **60% de opacidade**
+
+### Paleta de Cores
+
+- **#191919** — Fundo principal da aplicação
+- **#202020** — Fundo do cabeçalho secundário
+- **#2C2C2C** — Fundo de cards e elementos de interface
+- **#B3B3B3** — Texto secundário e elementos menos relevantes
+- **#FFFFFF** — Texto principal e elementos em destaque
+
+### Botões
+
+- O botão principal (`+ Nova Tarefa`) tem texto branco com borda branca e fundo transparente.
+- Em interações (hover, focus), a cor de fundo pode inverter para branco, e o texto deve seguir a cor de fundo original.
+- O botão deve ter **border-radius: 6px** e **padding adequado**.
+
+### Bordas
+
+- **Espessura**: 4px
+- **Raio**: 6px
+- Usadas em cards, campos de input e divisão de colunas.
+
+### Cards
+
+- Os cards devem seguir estrutura consistente:
+  - Título (H4 - branco)
+  - Descrição (texto secundário - opacidade menor)
+  - Tipo e Prioridade (texto menor - cor #B3B3B3)
+- Fundo escuro (`#2C2C2C`) com borda (`#2C2C2C` ou `#2C2C2C` opaco)
 
 
 ### 3.5. Protótipo de alta fidelidade (Semana 05)
 
 ![Protótipo de alta fidelidade das telas](assets/images/prototipo-alta-paginas.png)
 <br>
-![Guia de estilos e layout das telas](assets/images/prototipo-alta-layouts.png)
-<br>
+
 
 ### 3.6 WebAPI e Endpoints
 
