@@ -248,7 +248,29 @@ Este guia de estilos foi criado para garantir uma identidade visual coerente e u
 
 ### 3.7 Interface e Navegação (Semana 07)
 
-*Descreva e ilustre aqui o desenvolvimento do frontend do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+Nesta fase, o frontend foi implementado para permitir que o usuário interaja diretamente com as tarefas:
+
+- **Tela Principal (views/tarefas.ejs)**  
+  - Exibe uma grade semanal (segunda a domingo) utilizando um grid de 7 colunas.  
+  - Cada coluna mostra os cards de tarefa cujas datas caem naquela semana, preenchidos dinamicamente via JavaScript e Fetch API.  
+  - O cabeçalho possui apenas o botão “+ Nova Tarefa” (sem título fixo), seguindo o guia de estilos.
+
+- **Modal de Criação/Edição (views/partials/modal-nova-tarefa.ejs)**  
+  - Sobrepõe a tela principal com um overlay semitransparente (rgba(0,0,0,0.7)).  
+  - Contém campos para “Título”, “Descrição”, “Tipo de atividade”, “Prioridade” e “Data”.  
+  - Botão “Salvar” (btn-submit) com fundo branco e texto escuro, e “Cancelar” (btn-cancel) transparente.  
+  - O mesmo modal é usado para criar ou editar; ao clicar em um card, o formulário é preenchido com os dados existentes.
+
+- **Integração com Back-end**  
+  - Ao carregar a página, `calendar.js` faz `GET /api/tarefas`, gera as colunas e injeta cada card de tarefa na coluna correspondente (baseado em `data_limite`).  
+  - Navegação entre semanas: botões “<” e “>” ajustam a variável `startOfWeek` em incrementos de 7 dias, recarregando as tarefas visualizadas.  
+  - Enviar formulário dispara `POST /api/tarefas` (criação) ou `PUT /api/tarefas/:id` (edição), retornando JSON e atualizando a grade sem recarregar a página.
+
+- **Fluxo Resumido**  
+  1. **Acesso** → redireciona para `/tarefas` → EJS renderiza a estrutura básica.  
+  2. **JavaScript** → busca tarefas, monta colunas e cards.  
+  3. **Criar/Edição** → abre modal, preenche (se editar), envia com fetch → backend atualiza banco → frontend recarrega grade.  
+  4. **Navegação Semanal** → muda `startOfWeek` e chama novamente `loadTasksForWeek()`.
 
 ---
 
