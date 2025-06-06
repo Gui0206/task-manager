@@ -133,8 +133,3 @@ module.exports = pool;
 ```
 
 ---
-
-## Atualizações no WAD.md
-
-- **Seção 1 – Introdução**: Descreve objetivo e escopo do Gerenciador de Tarefas para Estudantes Universitários.
-- **Seção 3.1 – Modelo de Banco de Dados**: Inclui diagrama lógico/físico (`modelo-banco.png`) de criação das tabelas.
