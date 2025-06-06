@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Visão Semanal</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <!-- HEADER PRINCIPAL (92px, sem texto, só botão) -->
+  <header class="header-main">
+    <div class="header-content">
+      <div class="header-placeholder"></div>
+      <button id="open-modal" class="btn-nova-tarefa">+ Nova Tarefa</button>
+    </div>
+  </header>
+
+  <!-- SUBHEADER: NAVEGAÇÃO DE SEMANAS (115px) -->
+  <section id="week-navigation" class="week-nav">
+    <button id="prev-week" class="nav-btn">&lt;</button>
+    <span class="week-label">Semana de <span id="label-week"></span></span>
+    <button id="next-week" class="nav-btn">&gt;</button>
+  </section>
+
+  <!-- CALENDÁRIO: Grade Semanal -->
+  <section id="calendar" class="calendar">
+    <!-- Cabeçalho dos dias da semana -->
+    <div class="header-days">
+      <div>Segunda</div>
+      <div>Terça</div>
+      <div>Quarta</div>
+      <div>Quinta</div>
+      <div>Sexta</div>
+      <div>Sábado</div>
+      <div>Domingo</div>
+    </div>
+
+    <!-- Grade onde as colunas serão injetadas via JS -->
+    <div id="tasks-grid" class="body-tasks"></div>
+  </section>
+
+  <!-- MODAL: formulário de “Nova Tarefa” -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+      <!-- Cabeçalho do modal -->
+      <div class="modal-header">
+        <h2 id="modal-title">Nova Tarefa</h2>
+        <button id="close-modal" class="modal-close">&times;</button>
+      </div>
+      <!-- Formulário de criação/edição de tarefa -->
+      <form id="form-nova-tarefa" class="modal-form">
+        <!-- Título -->
+        <label for="titulo">Título</label>
+        <input
+          type="text"
+          id="titulo"
+          name="titulo"
+          placeholder="Digite o título"
+          required
+        />
+
+        <!-- Descrição -->
+        <label for="descricao">Descrição</label>
+        <textarea
+          id="descricao"
+          name="descricao"
+          placeholder="Descreva a tarefa"
+        ></textarea>
+
+        <!-- Tipo de atividade -->
+        <label for="tipo_id">Tipo de atividade</label>
+        <select id="tipo_id" name="tipo_id" required>
+          <option value="" disabled>Selecione o tipo</option>
+          <option value="1">Autoestudo</option>
+          <option value="2">Revisão</option>
+          <option value="3">Trabalho</option>
+          <option value="4">Prova</option>
+        </select>
+
+        <!-- Prioridade -->
+        <label for="prioridade">Prioridade</label>
+        <select id="prioridade" name="prioridade" required>
+          <option value="" disabled>Selecione a prioridade</option>
+          <option value="baixa">Baixa</option>
+          <option value="media">Média</option>
+          <option value="alta">Alta</option>
+        </select>
+
+        <!-- Data -->
+        <label for="data_limite">Data</label>
+        <input type="date" id="data_limite" name="data_limite" required />
+
+        <!-- Botões Salvar/Cancelar -->
+        <div class="modal-actions">
+          <button type="submit" class="btn-submit">Salvar</button>
+          <button type="button" id="cancel-modal" class="btn-cancel">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==============================
+       SCRIPTS: CALENDÁRIO E MODAL
+       ============================== -->
+  <script>
+    // === Variáveis de escopo global para edição ===
+    let startOfWeek = new Date();
+    startOfWeek.setDate(startOfWeek.getDate() - (startOfWeek.getDay() + 6) % 7);
+    let editingId = null; // quando for editar, recebe o id da tarefa
+
+    function updateWeekLabel() {
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(endOfWeek.getDate() + 6);
+      const day1 = String(startOfWeek.getDate()).padStart(2, '0');
+      const mon1 = String(startOfWeek.getMonth() + 1).padStart(2, '0');
+      const day2 = String(endOfWeek.getDate()).padStart(2, '0');
+      const mon2 = String(endOfWeek.getMonth() + 1).padStart(2, '0');
+      document.getElementById('label-week').innerText = `${day1}/${mon1} a ${day2}/${mon2}`;
+    }
+
+    async function loadTasksForWeek() {
+      updateWeekLabel();
+      const res = await fetch('/api/tarefas');
+      const tarefas = await res.json();
+      const grid = document.getElementById('tasks-grid');
+      grid.innerHTML = '';
+
+      // Cria 7 colunas para cada dia
+      for (let i = 0; i < 7; i++) {
+        const col = document.createElement('div');
+        col.classList.add('day-column');
+        col.dataset.dayIndex = i;
+        grid.appendChild(col);
+      }
+
+      // Insere cada tarefa na coluna correta
+      tarefas.forEach((tarefa) => {
+        const dataLimite = new Date(tarefa.data_limite);
+        const diffMs = dataLimite - startOfWeek;
+        const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffDias >= 0 && diffDias < 7) {
+          const coluna = grid.querySelector(`[data-day-index="${diffDias}"]`);
+          const card = document.createElement('div');
+          card.classList.add('task-card');
+          card.dataset.id = tarefa.id; // armazena id para editar
+
+          card.innerHTML = `
+            <h4 class="task-title">${tarefa.titulo}</h4>
+            <p class="task-desc">${tarefa.descricao || ''}</p>
+            <small class="task-meta">Tipo: ${tarefa.tipo_nome}</small><br>
+            <small class="task-meta">Prioridade: ${tarefa.prioridade}</small>
+          `;
+
+          // Ao clicar no card, abre modal para edição
+          card.addEventListener('click', () => openEditModal(tarefa));
+
+          coluna.appendChild(card);
+        }
+      });
+    }
+
+    document.getElementById('prev-week').addEventListener('click', () => {
+      startOfWeek.setDate(startOfWeek.getDate() - 7);
+      loadTasksForWeek();
+    });
+    document.getElementById('next-week').addEventListener('click', () => {
+      startOfWeek.setDate(startOfWeek.getDate() + 7);
+      loadTasksForWeek();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadTasksForWeek();
+    });
+
+    // === Funções de Modal ===
+    const openBtn = document.getElementById('open-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const closeBtn = document.getElementById('close-modal');
+    const cancelBtn = document.getElementById('cancel-modal');
+    const form = document.getElementById('form-nova-tarefa');
+    const modalTitle = document.getElementById('modal-title');
+
+    function showModal() {
+      modalOverlay.style.display = 'flex';
+    }
+
+    function hideModal() {
+      modalOverlay.style.display = 'none';
+      form.reset();
+      editingId = null;
+      modalTitle.innerText = 'Nova Tarefa';
+    }
+
+    openBtn.addEventListener('click', () => {
+      editingId = null;
+      modalTitle.innerText = 'Nova Tarefa';
+      showModal();
+    });
+    closeBtn.addEventListener('click', hideModal);
+    cancelBtn.addEventListener('click', hideModal);
+
+    // Abre modal para editar, pré-preenchendo campos
+    function openEditModal(tarefa) {
+      editingId = tarefa.id;
+      modalTitle.innerText = 'Editar Tarefa';
+
+      document.getElementById('titulo').value = tarefa.titulo;
+      document.getElementById('descricao').value = tarefa.descricao || '';
+      document.getElementById('tipo_id').value = tarefa.tipo_id;
+      document.getElementById('prioridade').value = tarefa.prioridade;
+      // Ajusta data no formato YYYY-MM-DD
+      document.getElementById('data_limite').value = tarefa.data_limite;
+
+      showModal();
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Monta objeto com dados do formulário
+      const body = {
+        titulo: document.getElementById('titulo').value,
+        descricao: document.getElementById('descricao').value,
+        tipo_id: parseInt(document.getElementById('tipo_id').value),
+        prioridade: document.getElementById('prioridade').value,
+        data_limite: document.getElementById('data_limite').value
+      };
+
+      try {
+        let res;
+        if (editingId) {
+          // Se estiver editando, usa PUT em /api/tarefas/:id
+          res = await fetch(`/api/tarefas/${editingId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        } else {
+          // Se for nova, usa POST em /api/tarefas
+          res = await fetch('/api/tarefas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        }
+
+        if (res.ok) {
+          hideModal();
+          loadTasksForWeek();
+        } else {
+          const data = await res.json();
+          alert('Erro ao salvar: ' + (data.error || data.message));
+        }
+      } catch (err) {
+        alert('Erro de rede: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
