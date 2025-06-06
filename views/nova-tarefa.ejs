@@ -1,0 +1,96 @@
+<!-- views/nova-tarefa.ejs -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nova Tarefa</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header>
+    <h1>📋 Gerenciador de Tarefas</h1>
+    <nav>
+      <a href="/tarefas">Início</a> |
+      <a href="/tarefas/nova">+ Nova Tarefa</a>
+    </nav>
+    <hr />
+  </header>
+
+  <!-- Conteúdo do formulário -->
+  <section id="form-section">
+    <h2>Nova Tarefa</h2>
+    <form id="form-nova-tarefa">
+      <label for="titulo">Título</label><br />
+      <input type="text" id="titulo" name="titulo" required /><br /><br />
+
+      <label for="descricao">Descrição</label><br />
+      <textarea id="descricao" name="descricao"></textarea><br /><br />
+
+      <label for="disciplina_id">Disciplina (ID)</label><br />
+      <input type="number" id="disciplina_id" name="disciplina_id" required /><br /><br />
+
+      <label for="tipo_id">Tipo de Atividade (ID)</label><br />
+      <input type="number" id="tipo_id" name="tipo_id" required /><br /><br />
+
+      <label for="prioridade">Prioridade</label><br />
+      <select id="prioridade" name="prioridade" required>
+        <option value="baixa">Baixa</option>
+        <option value="media">Média</option>
+        <option value="alta">Alta</option>
+      </select><br /><br />
+
+      <label for="status">Status</label><br />
+      <select id="status" name="status" required>
+        <option value="pendente">Pendente</option>
+        <option value="em andamento">Em andamento</option>
+        <option value="concluida">Concluída</option>
+      </select><br /><br />
+
+      <label for="data_limite">Data Limite</label><br />
+      <input type="date" id="data_limite" name="data_limite" required /><br /><br />
+
+      <button type="submit">Salvar</button>
+      <button type="button" onclick="window.location.href='/tarefas'">Cancelar</button>
+    </form>
+  </section>
+
+  <script>
+    document.getElementById('form-nova-tarefa').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const body = {
+        titulo: document.getElementById('titulo').value,
+        descricao: document.getElementById('descricao').value,
+        disciplina_id: parseInt(document.getElementById('disciplina_id').value),
+        tipo_id: parseInt(document.getElementById('tipo_id').value),
+        prioridade: document.getElementById('prioridade').value,
+        status: document.getElementById('status').value,
+        data_limite: document.getElementById('data_limite').value
+      };
+
+      try {
+        const res = await fetch('/api/tarefas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (res.ok) {
+          window.location.href = '/tarefas';
+        } else {
+          const data = await res.json();
+          alert('Erro ao criar: ' + (data.error || data.message));
+        }
+      } catch (err) {
+        alert('Erro de rede: ' + err.message);
+      }
+    });
+  </script>
+
+  <!-- Rodapé -->
+  <footer>
+    <hr />
+    <small>Desenvolvido por Guilherme Holanda Marques</small>
+  </footer>
+</body>
+</html>

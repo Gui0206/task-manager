@@ -1,0 +1,323 @@
+/* public/css/styles.css */
+
+/* Reset e fonte Inter */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Paleta de cores (Style Guide) */
+:root {
+  --color-bg-main: #191919;
+  --color-bg-header: #191919;
+  --color-bg-subheader: #202020;
+  --color-border: #2C2C2C;
+  --color-card-bg: #2C2C2C;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-muted: #B3B3B3;
+  --color-overlay-bg: rgba(0, 0, 0, 0.7);
+  --color-modal-bg: #1f1f1f;
+}
+
+/* BODY */
+body {
+  background: var(--color-bg-main);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* HEADER PRINCIPAL (92px de altura, cor #191919) */
+.header-main {
+  background: var(--color-bg-header);
+  height: 92px;
+  border-bottom: 4px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header-placeholder {
+  flex: 1;
+}
+
+.btn-nova-tarefa {
+  font-size: 1.5rem; /* H4 Inter */
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 2px solid var(--color-text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px; /* corner radius: 6 */
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-nova-tarefa:hover {
+  background: var(--color-text-primary);
+  color: var(--color-bg-header);
+}
+
+/* SUBHEADER (NAVEGAÇÃO DE SEMANAS) - 115px, cor #202020 */
+.week-nav {
+  background: var(--color-bg-subheader);
+  height: 115px;
+  border-bottom: 2px solid var(--color-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.25rem; /* H3 Inter */
+  cursor: pointer;
+  margin: 0 1rem;
+}
+
+.nav-btn:hover {
+  color: var(--color-border);
+}
+
+.week-label {
+  font-size: 1.5rem; /* H4 Inter */
+  color: var(--color-text-primary);
+}
+
+/* CALENDAR CONTAINER */
+.calendar {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* GRADE DE 7 COLUNAS */
+.grid-7 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* CABEÇALHO DOS DIAS DA SEMANA */
+.header-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;              /* <–– garante NENHUM espaçamento extra */
+  margin-bottom: 0.5rem;
+}
+
+.header-days div {
+  text-align: center;
+  font-size: 1rem;     /* H4 Inter */
+  font-weight: 500;
+  padding: 0.5rem 0;
+  color: var(--color-text-primary);
+}
+
+/* CORPO DAS COLUNAS (linhas verticais até o final da tela) */
+.body-tasks {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  min-height: calc(100vh - 92px - 115px - 20px);
+  /* 20px para margem inferior */
+}
+
+.day-column {
+  position: relative;
+  border-left: 4px solid var(--color-border);
+  padding: 0.5rem;
+  overflow-y: auto; /* Se muitas tarefas, cada coluna rola verticalmente */
+}
+
+.day-column:nth-child(1) {
+  border-left: none;
+}
+
+/* CARD DE TAREFA */
+.task-card {
+  background: var(--color-card-bg);
+  border: 4px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.task-card:hover {
+  background: #3a3a3a;
+}
+
+.task-title {
+  font-size: 1rem; /* H4 Inter */
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--color-text-primary);
+}
+
+.task-desc {
+  font-size: 0.875rem; /* H5 Inter */
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.task-meta {
+  font-size: 0.75rem; /* H6 Inter */
+  color: var(--color-text-muted);
+}
+
+/* ROLAGEM NA GRADE DE TAREFAS */
+#tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;   /* <–– remove o espaçamento que desalinharia as colunas */
+  min-height: calc(100vh - 92px - 115px - 20px);
+  /* Body sem gap: cada .day-column ficará exatamente abaixo de cada cell de .header-days */
+}
+
+/* Cada coluna tem borda à esquerda, para formar a linha vertical */
+.day-column {
+  border-left: 4px solid var(--color-border);
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+
+/* Remove a borda da primeira coluna (segunda-feira) */
+.day-column:nth-child(1) {
+  border-left: none;
+}
+
+/* ===============================
+   ESTILIZAÇÃO DO MODAL E OVERLAY
+   =============================== */
+
+/* Overlay sem exibição inicial */
+.modal-overlay {
+  display: none; /* torna-se flex quando aberto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-overlay-bg);
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* acima de tudo */
+}
+
+/* Box do modal (formulário) */
+.modal-content {
+  background: var(--color-modal-bg);
+  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  width: 500px;        /* Ajustado para corresponder ao protótipo */
+  max-width: 90%;
+  padding: 1.5rem;
+  position: relative;
+}
+
+/* Cabeçalho interno do modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem; /* H2 Inter no protótipo */
+  color: var(--color-text-primary);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Formulário no modal */
+.modal-form label {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 1rem; /* H4 Inter */
+  color: var(--color-text-primary);
+}
+
+.modal-form input,
+.modal-form textarea,
+.modal-form select {
+  width: 100%;
+  background: var(--color-bg-main);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.modal-form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.modal-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20fill='%23fff'%3E%3Cpath%20d='M4%206l4%204%204-4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 0.75rem;
+  padding-right: 1.5rem;
+}
+
+.modal-actions {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+.btn-submit {
+  background: var(--color-text-primary);
+  color: #1F1F1F;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem; /* H4 Inter */
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover {
+  background: var(--color-border);
+}
+
+.btn-cancel {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: none;
+  margin-right: 1rem;
+  font-size: 1rem; /* H4 Inter */
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-cancel:hover {
+  color: var(--color-text-primary);
+}
