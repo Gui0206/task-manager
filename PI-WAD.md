@@ -14,7 +14,7 @@
 
 <br>
 
-## <a name="c1"></a>1. Introdução (Semana 01)
+## <a name="c1"></a>1. Introdução
 
 Neste projeto, será desenvolvido um **Gerenciador de Tarefas para Estudantes Universitários**,  com foco em organização acadêmica individual. A aplicação tem como objetivo ajudar alunos de graduação a:
 
@@ -82,7 +82,7 @@ A solução adota arquitetura full-stack, integrando banco de dados, backend e f
 
 ## <a name="c3"></a>3. Projeto da Aplicação Web
 
-### 3.1. Modelagem do banco de dados  (Semana 3)
+### 3.1. Modelagem do banco de dados 
 
 *Posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário.*
 
@@ -132,7 +132,7 @@ A aplicação segue o padrão **MVC**:
 > 5. Controller envia JSON →  
 > 6. Cliente consome resposta.
 
-### 3.3. Wireframes (Semana 03)
+### 3.3. Wireframes
 
 A seguir, apresento os wireframes das telas principais do Gerenciador de Tarefas, alinhados às User Stories:
 
@@ -185,7 +185,7 @@ A seguir, apresento os wireframes das telas principais do Gerenciador de Tarefas
 
 Os wireframes de baixa fidelidade focam na estrutura e navegação, garantindo que os fluxos principais (listar, criar e editar tarefas) estejam contemplados antes de avançar para o design de alta fidelidade.
 
-### 3.4. Guia de estilos (Semana 05)
+### 3.4. Guia de estilos
 
 Este guia de estilos foi criado para garantir uma identidade visual coerente e uma boa experiência de uso em toda a aplicação. A seguir estão as instruções para a utilização correta dos componentes visuais:
 
@@ -230,7 +230,7 @@ Este guia de estilos foi criado para garantir uma identidade visual coerente e u
 - Fundo escuro (`#2C2C2C`) com borda (`#2C2C2C` ou `#2C2C2C` opaco)
 
 
-### 3.5. Protótipo de alta fidelidade (Semana 05)
+### 3.5. Protótipo de alta fidelidade 
 
 ![Protótipo de alta fidelidade das telas](assets/images/prototipo-alta-paginas.png)
 <br>
@@ -246,7 +246,7 @@ Este guia de estilos foi criado para garantir uma identidade visual coerente e u
 | PUT    | `/api/tarefas/:id`   | `TarefaController.editarTarefa` | Atualiza os dados de uma tarefa   |
 | DELETE | `/api/tarefas/:id`   | `TarefaController.excluirTarefa`| Remove uma tarefa pelo ID         |
 
-### 3.7 Interface e Navegação (Semana 07)
+### 3.7 Interface e Navegação 
 
 Nesta fase, o frontend foi implementado para permitir que o usuário interaja diretamente com as tarefas:
 
@@ -277,14 +277,14 @@ Nesta fase, o frontend foi implementado para permitir que o usuário interaja di
 
 ---
 
-## <a name="c4"></a>4. Desenvolvimento da Aplicação Web (Semana 8)
+## <a name="c4"></a>4. Desenvolvimento da Aplicação Web 
 
-### 4.1 Demonstração do Sistema Web (Semana 8)
+### 4.1 Demonstração do Sistema Web
 
 *VIDEO: Insira o link do vídeo demonstrativo nesta seção*
 *Descreva e ilustre aqui o desenvolvimento do sistema web completo, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
 
-### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
+### 4.2 Conclusões e Trabalhos Futuros 
 
 *Indique pontos fortes e pontos a melhorar de maneira geral.*
 *Relacione também quaisquer outras ideias que você tenha para melhorias futuras.*
