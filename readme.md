@@ -1,5 +1,11 @@
 # Gerenciador de Tarefas para Estudantes Universitários
 
+## 🎥 Demonstração em Vídeo
+
+Assista à demonstração do sistema funcionando no YouTube:  
+👉 [https://youtu.be/-GHnzy98mWI](https://youtu.be/-GHnzy98mWI)
+
+
 ## Descrição do sistema
 
 Aplicação web para auxiliar estudantes de graduação a organizar suas atividades acadêmicas de forma simples e objetiva.
