@@ -21,25 +21,21 @@ meu-projeto/
 │   └── database.js         # Configuração de conexão com o banco
 │
 ├── controllers/
-│   └── TaskController.js   # Lógica de CRUD de tarefas
+│   └── TarefaController.js   # Lógica de CRUD de tarefas
 │
 ├── models/
-│   └── Task.js             # Definição do modelo Task (ORM ou schema)
+│   └── Tarefa.js             # Definição do modelo Task (ORM ou schema)
 │
 ├── routes/
 │   └── index.js            # Rotas principais (tasks, disciplinas, tipos)
 │
 ├── views/
-│   ├── layout.ejs          # Template base
-│   └── tasks.ejs           # Página de visualização semanal
+│   └── tarefas.ejs           # Página de visualização semanal
 │
 ├── public/
 │   ├── css/                # Arquivos CSS
 │   ├── js/                 # Scripts de interação
 │   └── images/             # Imagens e ícones
-│
-├── scripts/
-│   └── seed.js             # (Opcional) scripts de preenchimento inicial
 │
 ├── .env.example            # Exemplo de variáveis de ambiente
 ├── .gitignore              # Ignorar node_modules, .env, etc.
